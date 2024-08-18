@@ -44,16 +44,72 @@ public class CarBehaviourScript : MonoBehaviour
     [Tooltip("How much driftAccel affects speed")]
     public float driftAccelRate = 3f;
 
+    public VehicalGear[] gearSettings;
+
+    public int currentGear = 0;
+
+    public Vector3 origScale;
+
+    public bool gearLock = false; // Bool to prevent gear changing while scaling
+
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        origScale = transform.localScale;
+
+        GearShift(0);
+    }
+
+    void GearShift(int i)
+    {
+        gearLock = true;
+        x_Speed = gearSettings[i].x_Speed;
+        y_Speed = gearSettings[i].y_Speed;
+        speed_Limit = gearSettings[i].speed_Limit;
+        drag = gearSettings[i].drag;
+        traction = gearSettings[i].traction;
+        driftAccelRate = gearSettings[i].driftAccelRate;
+
+        //transform.localScale = origScale * gearSettings[i].scale;
+        StartCoroutine(SizeScale(origScale * gearSettings[i].scale, 0.1f));
+    }
+
+
+    IEnumerator SizeScale(Vector3 intendedScale,float scaleSpeed)
+    {
+        Time.timeScale = 0.4f;
+        float direction = Mathf.Abs(Vector3.Distance(intendedScale, transform.localScale));
+        float timeScale = 0f;
+        do
+        {
+
+            transform.localScale = Vector3.Lerp(transform.localScale, intendedScale, timeScale);
+            timeScale += scaleSpeed;
+            yield return new WaitForSecondsRealtime(scaleSpeed);
+        } while (transform.localScale != intendedScale);
+        transform.localScale = intendedScale;
+        gearLock = false;
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (gearLock == false)
+        {
+            if (Input.GetKey(KeyCode.Q) && currentGear < gearSettings.Length - 1 && forward_Force >= gearSettings[currentGear].gearCutoff)
+            {
+                GearShift(currentGear + 1);
+                ++currentGear;
+            }
+            else if (Input.GetKey(KeyCode.E) && currentGear > 0)
+            {
+                GearShift(currentGear - 1);
+                --currentGear;
+            }
+        }
         input_X = Input.GetAxis("Horizontal");
         input_Y = Input.GetAxis("Vertical");
 

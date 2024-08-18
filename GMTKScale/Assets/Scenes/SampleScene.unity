@@ -409,6 +409,12 @@ MonoBehaviour:
   vehicleObj: {fileID: 405017150}
   driftAccel: 0
   driftAccelRate: 150
+  gearSettings:
+  - {fileID: 11400000, guid: 9c6dcee3362b627439f48c0ebb45d68d, type: 2}
+  - {fileID: 11400000, guid: ff1c876546f4ca14a9b185e2321d95d7, type: 2}
+  currentGear: 0
+  origScale: {x: 0, y: 0, z: 0}
+  gearLock: 0
 --- !u!65 &105542667
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1679,8 +1685,8 @@ Transform:
   m_GameObject: {fileID: 2039011369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.09, z: -6.45}
-  m_LocalScale: {x: 13.306062, y: 13.306062, z: 13.306062}
+  m_LocalPosition: {x: 0, y: -0.09, z: -6.4505}
+  m_LocalScale: {x: 2229.8298, y: 2229.8298, z: 2229.8298}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
