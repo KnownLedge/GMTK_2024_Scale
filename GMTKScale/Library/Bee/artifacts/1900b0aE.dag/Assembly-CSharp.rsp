@@ -353,6 +353,7 @@
 -analyzer:"E:/Ryans_Stuff/Unity Files/UnityUniVers/2022.3.7f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"E:/Ryans_Stuff/Unity Files/UnityUniVers/2022.3.7f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/CarBehaviourScript.cs"
+"Assets/Scripts/CarScript.cs"
 "Assets/TestAudioFolder/TestScript.cs"
 -langversion:9.0
 
