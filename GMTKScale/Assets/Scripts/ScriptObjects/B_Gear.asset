@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: B_Gear
   m_EditorClassIdentifier: 
   x_Speed: 5
-  y_Speed: 100
-  speed_Limit: 650
+  y_Speed: 22.5
+  speed_Limit: 1300
   drag: 0.99
   traction: 1
   driftAccelRate: 175
-  scale: 2
-  gearCutoff: 40
+  scale: 0.75
+  gearCutoff: 30

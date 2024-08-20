@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR;
 
 public class CarBehaviourScript : MonoBehaviour
@@ -52,6 +53,16 @@ public class CarBehaviourScript : MonoBehaviour
 
     public bool gearLock = false; // Bool to prevent gear changing while scaling
 
+    public Image speedoMeter; // Reference to Speedometer UI
+
+    public Image speedLine; // Reference for the line that points to the gear change cap
+
+    public float accelRampT;
+
+    public float accelRampRate = 3f;
+
+    public BumperCollision bumpScript;
+
 
     // Start is called before the first frame update
     void Start()
@@ -99,12 +110,12 @@ public class CarBehaviourScript : MonoBehaviour
     {
         if (gearLock == false)
         {
-            if (Input.GetKey(KeyCode.Q) && currentGear < gearSettings.Length - 1 && forward_Force >= gearSettings[currentGear].gearCutoff)
+            if (Input.GetKey(KeyCode.E) && currentGear < gearSettings.Length - 1 && forward_Force >= gearSettings[currentGear].gearCutoff)
             {
                 GearShift(currentGear + 1);
                 ++currentGear;
             }
-            else if (Input.GetKey(KeyCode.E) && currentGear > 0)
+            else if (Input.GetKey(KeyCode.Q) && currentGear > 0)
             {
                 GearShift(currentGear - 1);
                 --currentGear;
@@ -113,9 +124,24 @@ public class CarBehaviourScript : MonoBehaviour
         input_X = Input.GetAxis("Horizontal");
         input_Y = Input.GetAxis("Vertical");
 
+        accelRampT = (forward_Force + 0.01f) / speed_Limit;
 
-        moveForce += transform.forward * input_Y * (y_Speed  + driftAccel * driftAccelRate)* Time.deltaTime;
 
+        moveForce += transform.forward * input_Y  * (y_Speed + driftAccel * driftAccelRate) * Time.deltaTime;
+
+
+        if (bumpScript.hitWall)
+        {
+
+            moveForce = -moveForce;
+            if(currentGear > 0 & gearLock == false)
+            {
+                GearShift(currentGear - 1);
+                --currentGear;
+            }
+ 
+            bumpScript.hitWall = false;
+        }
 
         storeGrav = rb.velocity.y;
 
@@ -141,9 +167,45 @@ public class CarBehaviourScript : MonoBehaviour
         vehicleObj.forward = Vector3.Reflect(moveForce.normalized, transform.forward);
         moveForce = Vector3.Lerp(moveForce.normalized, transform.forward, traction * Time.deltaTime) * moveForce.magnitude;
 
-        driftAccel = Vector3.Distance(moveForce.normalized, transform.forward);
-    }
-}
+    
+        driftAccel = Vector3.Distance(moveForce.normalized, transform.forward.normalized);
+        if (driftAccel > 1) {
+            driftAccel = 0f;
+                
+                }
 
+        speedoMeter.fillAmount = forward_Force / 100;
+
+        speedLine.rectTransform.eulerAngles = new Vector3(0, 0, 180 - ((gearSettings[currentGear].gearCutoff / 100) * 360));
+
+        //Rotate vehicle to match floor
+
+        RaycastHit hitOn;
+        RaycastHit hitNear;
+
+        Physics.Raycast(transform.position, Vector3.down, out hitOn, 1.1f);
+        Debug.DrawRay(transform.position, Vector3.down, Color.green);
+        Physics.Raycast(transform.position + transform.forward * 0.2f, Vector3.down, out hitNear, 2.0f);
+        Debug.DrawRay(transform.position + transform.forward * 0.2f, Vector3.down, Color.yellow);
+
+        Vector3 upright = Vector3.Cross(transform.right, -(hitNear.point - hitOn.point).normalized);
+
+        //vehicleObj.up = Vector3.Lerp(vehicleObj.up, hitNear.normal, Time.deltaTime * 8.0f);
+        // vehicleObj.Rotate(0, transform.eulerAngles.y, 0);
+
+       Quaternion slopeRotation = Quaternion.FromToRotation(Vector3.up, hitNear.normal);
+
+
+        vehicleObj.rotation = slopeRotation * vehicleObj.rotation;
+
+        // vehicleObj.rotation.SetLookRotation(vehicleObj.rotation.eulerAngles, hitNear.normal);
+
+        //vehicleObj.rotation = Quaternion.LookRotation(Vector3.Cross(transform.forward, upright));
+
+    }
+
+
+}
+// 1 / 360
 //float currentSpeed = Rigidbody.velocity.magnitude;
 //float accelRampT = currentSpeed / maxSpeed;

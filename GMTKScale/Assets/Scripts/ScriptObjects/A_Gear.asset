@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd00b9594e533304b80c31b984d41f6f, type: 3}
   m_Name: A_Gear
   m_EditorClassIdentifier: 
-  x_Speed: 5
-  y_Speed: 75
+  x_Speed: 13
+  y_Speed: 15
   speed_Limit: 500
-  drag: 0.99
+  drag: 0.98
   traction: 1
-  driftAccelRate: 150
-  scale: 0.25
-  gearCutoff: 25
+  driftAccelRate: 75
+  scale: 0.35
+  gearCutoff: 6
