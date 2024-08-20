@@ -102,39 +102,39 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1534}
+      Script: {instanceID: 1560}
     - Class: 114
-      Script: {instanceID: 1536}
+      Script: {instanceID: 1562}
     - Class: 114
-      Script: {instanceID: 1542}
+      Script: {instanceID: 1568}
     - Class: 114
-      Script: {instanceID: 1584}
+      Script: {instanceID: 1610}
     - Class: 114
-      Script: {instanceID: 2162}
+      Script: {instanceID: 2188}
     - Class: 114
-      Script: {instanceID: 2778}
+      Script: {instanceID: 2700}
     - Class: 114
-      Script: {instanceID: 3544}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 3546}
+      Script: {instanceID: 3572}
     - Class: 114
-      Script: {instanceID: 3552}
+      Script: {instanceID: 3574}
     - Class: 114
-      Script: {instanceID: 3720}
+      Script: {instanceID: 3580}
     - Class: 114
-      Script: {instanceID: 4270}
+      Script: {instanceID: 3748}
     - Class: 114
-      Script: {instanceID: 4518}
+      Script: {instanceID: 4298}
     - Class: 114
-      Script: {instanceID: 4524}
+      Script: {instanceID: 4546}
     - Class: 114
-      Script: {instanceID: 5208}
+      Script: {instanceID: 4552}
     - Class: 114
-      Script: {instanceID: 7014}
+      Script: {instanceID: 5236}
     - Class: 114
-      Script: {instanceID: 7302}
+      Script: {instanceID: 7042}
     - Class: 114
-      Script: {instanceID: 28012}
+      Script: {instanceID: 7330}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -312,6 +312,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 361b4edd7a27f93824d31b8b9ab0293f
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: FPSCapper
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -1386,12 +1392,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
-  - hash:
-      serializedVersion: 2
-      Hash: 361b4edd7a27f93824d31b8b9ab0293f
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: FPSCapper
   platform: 19
   scenePathNames:
   - Assets/Scenes/LevelScene.unity
